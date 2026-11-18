@@ -24,4 +24,11 @@ app.use("/api/tasks", taskRoutes);
 const submissionRoutes = require("./routes/submissionRoutes");
 app.use("/api/submissions", submissionRoutes);
 
+const leaderboardRoutes = require("./routes/leaderboardRoutes");
+app.use("/api/leaderboard", leaderboardRoutes);
+
+
 module.exports = app;
+
+
+

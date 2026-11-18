@@ -5,8 +5,10 @@ import Login from "./pages/Login";
 import Dashboard from "./pages/Dashboard";
 import AdminDashboard from "./pages/AdminDashBoard";
 import Tasks from "./pages/Tasks";
-// import Leaderboard from "./pages/Leaderboard";
+import Leaderboard from "./pages/Leaderboard";
 import Profile from "./pages/Profile";
+
+import StudentLayout from "./components/StudentLayout";
 import { useAuth } from "./context/useAuth";
 
 const ProtectedRoute = ({ children, role }) => {
@@ -26,17 +28,24 @@ const ProtectedRoute = ({ children, role }) => {
 function App() {
   return (
     <Routes>
+
       <Route path="/login" element={<Login />} />
 
+      {/* Student Workspace */}
       <Route
-        path="/dashboard"
         element={
           <ProtectedRoute role="student">
-            <Dashboard />
+            <StudentLayout />
           </ProtectedRoute>
         }
-      />
+      >
+        <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/tasks" element={<Tasks />} />
+        <Route path="/leaderboard" element={<Leaderboard />} />
+        <Route path="/profile" element={<Profile />} />
+      </Route>
 
+      {/* Admin Workspace */}
       <Route
         path="/admin"
         element={
@@ -46,34 +55,8 @@ function App() {
         }
       />
 
-      <Route
-        path="/tasks"
-        element={
-          <ProtectedRoute>
-            <Tasks />
-          </ProtectedRoute>
-        }
-      />
-
-      {/* <Route
-        path="/leaderboard"
-        element={
-          <ProtectedRoute>
-            <Leaderboard />
-          </ProtectedRoute>
-        }
-      /> */}
-
-      <Route
-        path="/profile"
-        element={
-          <ProtectedRoute>
-            <Profile />
-          </ProtectedRoute>
-        }
-      />
-
       <Route path="*" element={<Navigate to="/login" replace />} />
+
     </Routes>
   );
 }
